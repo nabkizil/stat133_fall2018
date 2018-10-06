@@ -1,0 +1,29 @@
+---
+title: "R Notebook"
+output: github_document
+---
+
+
+```{r}
+
+
+setwd('C:/Users/nabki/Desktop/Stat133/workout1/data')
+data <- read.csv("nba2018.csv")
+
+data$experience <- as.character(data$experience)
+data$experience[data$experience == "R"] = 0
+data$experience <- as.integer(data$experience)
+
+data$salary <- data$salary/1000000
+
+levels(data$position) <-  c("center", 
+                           "power_fwd", 
+                           "point_guard", 
+                           "small_fwd", 
+                           "shoot_guard")
+
+
+
+```
+
+
