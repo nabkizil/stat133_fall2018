@@ -4,7 +4,7 @@ output: github_document
 ---
 
 
-```{r}
+```{r eval = FALSE}
 library(dplyr)
 
 setwd('C:/Users/nabki/Desktop/Stat133/workout1/data')
@@ -73,6 +73,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.path = "../report/workout1-Nabeil-Kizilba
 ```{r}
 library(ggplot2)
 library(dplyr)
+teams <- read.csv('../data/nba2018-teams.csv')
 
 
 #Teams by total salary
