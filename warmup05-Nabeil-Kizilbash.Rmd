@@ -1,0 +1,258 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include= FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+```
+
+
+
+---
+
+# Gaussian Function
+
+```{r}
+dnorm(x = 1, mean = 0, sd = 2)
+
+```
+
+```{r}
+# gaussian curve
+x_values <- seq(from = -4.5, to = 4.5, by = 0.1)
+y_values <- dnorm(x_values, mean = 0, sd = 2)
+y <- dnorm(x_values, mean = 0, sd = .5)
+z <- dnorm(x_values, mean = 0, sd = 1)
+a <- dnorm(x_values, mean = -2, sd = .8)
+plot(x_values, y_values, las = 1, type = "l", lwd = 2, ylim = range(0,1), col = "#ff8a23") 
+lines(x_values,y, las = .2, type = "l", lwd = 2, col = "#121b66" )
+lines(x_values,z, las = .5, type = "l", lwd = 2, col = "#ff0000" )
+lines(x_values,a, las = .2, type = "l", lwd = 2, col = '#126621')
+
+```
+
+---
+
+#Descriptive Statistics 
+
+```{r}
+#' @title descriptive function
+#' @description function that gets a numeric vector and then spits out the descriptive statistics for it
+#' @param numeric vector
+#' @return correpsonding descriptive statistics
+
+descriptive <- function(x){
+  
+  if (is.numeric(x) == FALSE){
+    stop("The input vector is not numeric")}
+  
+  list(summary(x))
+  
+}
+
+# input vectors
+set.seed(100)
+x <- rnorm(100)
+y <- x
+y[sample(1:100, size = 10)] <- NA
+# try your function
+descriptive(x)
+descriptive(y)
+descriptive(letters)
+
+```
+---
+
+# Two given points
+
+```{r}
+#' @title distance function
+#' @description calculates the distance between two points
+#' @param p1 and p2
+#' @return distance between p1 and p2
+
+
+a <- c(1,2)
+
+a[2]
+
+find_distance <- function(p1, p2){
+  
+  x1 <- p1[1]
+  x2 <- p2[1]
+  
+  y1 <- p1[2]
+  y2 <- p2[2]
+  
+  first <- (x1 - x2)**2
+  second <- (y1-y2)**2
+  
+  sqrt(first + second)
+}
+
+p1 <- c(0, 0)
+p2 <- c(1, 1)
+find_distance(p1, p2)
+
+
+
+```
+
+
+```{r}
+#' @title midpoint function
+#' @description calculates the midpoint between two points
+#' @param p1 and p2
+#' @return midpoint between p1 and p2
+
+find_midpoint <- function(p1, p2){
+  
+  x1 <- p1[1]
+  x2 <- p2[1]
+  
+  y1 <- p1[2]
+  y2 <- p2[2]
+  
+  m1 <- (x1 + x2)/2
+  m2 <- (y1 + y2)/2
+  
+  c(m1, m2)
+  
+}
+
+p1 <- c(0, 0)
+p2 <- c(1, 1)
+find_midpoint(p1, p2)
+
+```
+
+```{r}
+
+#' @title slope function
+#' @description calculates the slope between two points
+#' @param p1 and p2
+#' @return slope between p1 and p2
+
+
+find_slope <- function (p1,p2){
+  
+   x1 <- p1[1]
+  x2 <- p2[1]
+  
+  y1 <- p1[2]
+  y2 <- p2[2]
+  
+  (y2-y1)/(x2-x1)
+}
+
+p1 <- c(0, 0)
+p2 <- c(1, 1)
+find_slope(p1, p2)
+
+```
+
+```{r}
+#' @title intercept function
+#' @description calculates the intercept of two points
+#' @param p1 and p2
+#' @return intercept of p1 and p2
+
+
+find_intercept <- function (p1,p2){
+  
+  x1 <- p1[1]
+  x2 <- p2[1]
+  
+  y1 <- p1[2]
+  y2 <- p2[2]
+  
+  find_slope(p1,p2)*x1 + y1
+  
+}
+
+p1 <- c(0, 0)
+p2 <- c(1, 1)
+find_intercept(p1, p2)
+
+
+
+```
+
+
+```{r}
+
+p1 <- c(0,0)
+p2 <- c(1,1)
+
+
+#' @title find the equation of a line function
+#' @description calculates the corresponding line between two points
+#' @param p1 and p2
+#' @return list containing intercept and slope of p1 and p2
+find_line <- function(p1, p2){
+  
+  list(intercept = find_intercept(p1, p2), slope = find_slope(p1,p2))
+}
+
+
+eq <- find_line(p1,p2)
+
+eq$intercept
+eq$slope
+
+
+```
+
+
+
+```{r}
+
+p1 <- c(-2, 4)
+p2 <- c(1,2)
+
+
+#' @title information on points function
+#' @description calculates the information  of two points
+#' @param p1 and p2
+#' @return information of p1 and p2
+info_points <- function(p1, p2){
+  
+  list(intercept = find_intercept(p1,p2), slope = find_slope(p1,p2), distance = find_distance(p1, p2), midpoint = find_midpoint(p1,p2))
+}
+
+results <- info_points(p1, p2)
+results$distance
+results$midpoint
+results$intercept
+results$slope
+
+
+```
+
+
+```{r}
+p1 <- c(-2,4)
+p2 <- c(1,2)
+
+plot.new()
+plot.window(xlim = c(-3,3), ylim = c(0,5))
+axis(side = 1)
+axis(side = 2, las = 1)
+points(p1[1], p1[2], cex = 1.5, col = "#FF8834", pch = 19)
+points(p2[1], p2[2], cex = 1.5, col = "#FF8834", pch = 19)
+# midpoint (here you should use the midpoint outputs of your function)
+points(-1/2, 3, cex = 1.5, pch = "x", col = "#E16868")
+# slope and intercept (here you should use the outputs of your function)
+abline(a = 8/3, b = -2/3, col = "#FF883477", lwd = 3)
+title(main = expression(paste(y, ' = ', (-2/3) * x, ' + ', (8/3))))
+
+
+
+```
+
+
