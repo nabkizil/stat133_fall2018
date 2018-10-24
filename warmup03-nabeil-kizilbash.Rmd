@@ -1,0 +1,164 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Reading the Data into R
+
+**Do the data have a header containing the variable names?**
+Yes there are variable names associated with the data.
+
+**Are the values for an observation separated by a comma, blank, or tab?**
+They appear to be separated by a tab.
+
+```{r}
+github <- 'https://github.com/ucb-stat133/stat133-fall-2018/'
+repo <- 'raw/master/data/saratoga.txt'
+house <- read.table(paste0(github,repo), sep = "\t")
+```
+
+---
+
+# Examine Price
+
+```{r}
+
+data <- tail(house, -1)
+#data
+summary(house)
+
+price <-as.numeric( data$V1)
+max(price)
+
+price_log <- log(price)
+
+max(price_log)
+
+hist(price)
+hist(log(price))
+
+cheap <- (price_log < 10.5)
+length(cheap)
+
+price[cheap]
+
+```
+
+**How many houses are what we call cheap?**
+It seems like all of the houses are cheap, I can't find any that are not cheap
+
+---
+
+# Explore Living Area
+
+```{r}
+house
+
+data
+
+living <- as.numeric(data$V11)
+living
+
+hist(living)
+hist(log(living))
+
+
+```
+
+**What value does 6.8 correspond to with the initial terms of measurement?**
+It corresponds to e^6.8 which equals a square footage of 898.
+
+---
+
+# Tranforming Variables into Factors
+
+```{r}
+house
+
+BR <- as.numeric(data$V13)
+BR[ BR > 5 ] <- 5
+BR[ BR < 2] <- 2
+BR <- factor(BR, labels = c("2-BR", "3 BR", "4 BR", "5+ BR") )
+BR
+
+summary(BR)
+summary(house$v13)
+
+
+```
+
+
+**How does a summary of BR look different than a summary of Bedrooms?**
+The summary of BR looks different than Bedrooms because with the summary of bedrooms within house it just returns length zero and class and mode of NULL. But with the summary of BR it returns the number of houses that fall into the different categories of bedrooms.
+
+---
+
+# Plotting Price against Living Area
+
+```{r}
+my_colors <-  c("aquamarine3", "darkgoldenrod2", "coral2", "mediumorchid3")
+br_colors <- my_colors[BR]
+
+plot(V1 ~ V11, data = data, log = 'xy', main = '', xlab = "Living Area (log sq ft)", ylab = "Price (log$)", col = br_colors, pch = 19, cex = 0.4)
+
+legend("bottomright", fill = my_colors, legend = levels(BR), title = "# Bedrooms", cex = 0.75)
+
+```
+
+
+---
+
+# Number of Fireplaces
+
+```{r}
+house
+
+FP <- factor(data$V14)
+
+
+FP <- as.numeric(as.character(FP))
+
+FP[FP >= 1] <- "At least 1"
+FP[FP == 0] <- "None"
+FP
+
+price <- as.numeric(as.character(house$V1))
+
+sqft <- as.numeric(as.character(house$V11))
+
+pps <- price/sqft
+pps
+
+plot(price, pps)
+plot(price, sqft)
+
+plot(log(price), log(pps), col = ifelse(FP == "None", 'black', 'red'))
+
+```
+
+
+
+**Are houses with fireplaces generally more expensive than houses without?**
+No, I would say that houses with fireplaces are typically the same price as houses without fireplaces.
+
+**What is the relationship between price and pps?**
+There is a flat relationship between price and price per square foot, this makes sense because as the price increases, the living area also increases, which results in the price per square foot being relatively constant.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

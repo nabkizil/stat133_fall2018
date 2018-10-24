@@ -1,8 +1,8 @@
 ---
 title: "Lab 8: Simple Loops"
 subtitle: "Stat 133, Fall 2018"
-author: "Gaston Sanchez"
-output: github_document
+author: "Nabeil Kizilbash"
+output: 
 fontsize: 11pt
 urlcolor: blue
 ---

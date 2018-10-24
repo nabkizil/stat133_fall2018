@@ -1,0 +1,55 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r, eval = FALSE}
+
+# use your own user name
+git config --global user.name "Nabeil Kizilbash"
+
+# use your own email
+git config --global user.email "nabkizil@berkeley.edu"
+
+# colors
+git config --global color.ui "auto"
+
+echo "# Demo Repo" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/stat133-f18/hw-stat133-nabkizil
+git push -u origin master
+
+```
+
+
+
+```{r, eval = FALSE}
+
+cd Desktop
+mkdir demo-repo
+
+
+echo "# Demo Repo" >> README.md
+
+
+
+git init
+
+
+
+# Verify new remote
+origin  https://github.com/username/demo-repo.git (fetch)
+origin  https://github.com/username/demo-repo.git (push)
+
+```
+
+
+

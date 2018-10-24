@@ -1,0 +1,281 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, error = TRUE)
+
+```
+
+
+
+
+#Binomial Probability Functions
+
+```{r}
+
+
+
+#' @title is_integer
+#' @description checks whether or not a number is an integer
+#' @param a number
+#' @return True or False
+
+is_integer <- function(x){
+  
+  if (as.numeric(x)%%1 == 0){
+    TRUE
+  }
+  
+  else{ FALSE}
+}
+
+# TRUE's
+is_integer(-1)
+is_integer(0)
+is_integer(2L)
+is_integer(2)
+# FALSE's
+is_integer(2.1)
+is_integer(pi)
+is_integer(0.01)
+
+
+
+#' @title is_positive
+#' @description checks whether or not a number is positive
+#' @param a number
+#' @return True or False
+
+is_positive <- function(x){
+  
+  if (as.numeric(x) >0){
+    TRUE
+  }
+  else{FALSE}
+}
+
+# TRUE's
+is_positive(0.01)
+is_positive(2)
+# FALSE's
+is_positive(-2)
+is_positive(0)
+
+
+#' @title is_nonnegative
+#' @description checks whether or not a number is nonnegative
+#' @param a number
+#' @return True or False
+is_nonnegative <- function(x){
+  
+  if (as.numeric(x) >0 || as.numeric(x) == 0){
+    TRUE
+  }
+  else{FALSE}
+}
+
+#' @title is_positive_integer
+#' @description checks whether or not a number is a positive integer
+#' @param a number
+#' @return True or False
+
+is_positive_integer <- function(x){
+  
+  if(is_integer(x) == TRUE && is_positive(x)){
+    TRUE
+  }
+  
+  else{FALSE}
+}
+
+
+# TRUE
+is_positive_integer(2)
+is_positive_integer(2L)
+# FALSE
+is_positive_integer(0)
+is_positive_integer(-2)
+
+#' @title is_nonnegative_integer
+#' @description checks whether or not a number is a nonnegative integer
+#' @param a number
+#' @return True or False
+
+is_nonneg_integer <- function(x){
+  
+  if(is_nonnegative(x) && is_integer(x)){
+    
+    TRUE
+  }
+  else{FALSE}
+}
+
+# TRUE's
+is_nonneg_integer(0)
+is_nonneg_integer(1)
+# FALSE
+is_nonneg_integer(-1)
+is_nonneg_integer(-2.5)
+
+#' @title is_probability
+#' @description checks whether or not a number is a prob
+#' @param a number
+#' @return True or False
+
+
+is_probability <- function(x){
+  
+  if ( (0 <= x) && (x <= 1)){
+    
+    TRUE
+  }
+  
+  else{ FALSE}
+}
+
+# TRUE's
+is_probability(0)
+is_probability(0.5)
+is_probability(1)
+# FALSE's
+is_probability(-1)
+is_probability(1.0000001)
+
+
+#' @title bin_factorial
+#' @description calculated the factorial of a non-neg integer n
+#' @param a number
+#' @return n!
+
+bin_factorial <- function(n) {
+  
+  vec <- c(1:n)
+  fac = 1
+  
+  if (n == 0){
+    fac}
+  
+  
+  else{
+  for (i in vec){
+    
+    fac = fac * i 
+  } 
+    fac
+  }
+  
+  }
+  
+  
+  
+ 
+
+bin_factorial(0)
+bin_factorial(5)
+  
+
+#' @title bin_combinations
+#' @description calculated the combinations
+#' @param n and k
+#' @return n! / (k!(n-k)!)
+
+bin_combinations <- function(n,k){
+  
+  n_fac <- bin_factorial(n)
+  k_fac <- bin_factorial(k)
+  
+  both <- bin_factorial(n-k)
+  
+  total <- n_fac/(k_fac * both)
+  total
+  
+}
+
+bin_combinations(10,5)
+
+
+#' @title bin_probability
+#' @description calculated the probability of a given set of trials
+#' @param trials, success and probability
+#' @return probability of successes in trials with probability
+
+bin_probability <- function(trials, success, prob){
+  
+  value <- 0
+  if(is_nonneg_integer(trials) == FALSE){
+    stop('bad trials value')
+  }
+
+  if(is_nonneg_integer(success) == FALSE){
+    stop('bad success value')
+  }
+  
+  if(is_probability(prob) == FALSE){
+    stop('bad prob')
+    
+  }
+  
+  if(success > trials){
+    stop('succ cant be greater than trials')
+  }
+  
+  else{
+    
+    value = (bin_combinations(trials, success) * (prob**success) *((1-prob)**(trials-success)))
+    value
+    
+    
+  }
+  
+  
+}
+ 
+
+bin_probability(trials = 5, success = 2, prob = 0.5)
+
+bin_combinations(5,2)
+
+# bad trials
+bin_probability(trials = 0, success = 2, prob = 0.5)
+# bad success
+bin_probability(trials = 5, success = 2.5, prob = 0.5)
+# success > trials
+bin_probability(trials = 5, success = 6, prob = 0.5)
+# bad prob
+bin_probability(trials = 5, success = 2, prob = -0.5)
+# 55 heads in 100 tosses of a loaded coin with 45% chance of heads
+bin_probability(trials = 100, success = 55, prob = 0.45)
+
+
+
+
+#' @title bin_distribution
+#' @description calculated the probability of a successes for number of trials
+#' @param trials and prob
+#' @return probability of successes in trials with probability
+
+bin_distribution <- function(trials, prob){
+  
+  vec = c(0:trials)
+  probab <- rep(0, length(vec) + 1)
+  
+  for (i in vec){
+    
+    probab[i+1] = bin_probability(trials, i, prob)
+
+  }
+  
+
+  df = data.frame("success" = vec, "probability" = probab[0:length(vec)] )
+  
+  df
+  
+  
+}
+
+bin_distribution(trials = 5, prob = 0.5)
+```
+
