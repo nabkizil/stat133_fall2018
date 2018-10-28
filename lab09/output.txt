@@ -1,0 +1,8 @@
+title: Lab 09
+author: Nabeil Kizilbash
+date: 10/27/2018
+output: html_document
+A 2nd line
+
+
+The quick brown fox jumps over the lazy dog
