@@ -1,0 +1,6 @@
+---
+title: "README"
+output: html_notebook
+---
+
+This is a simulating dice rolling package that allows you to create and simulate rolling a die of your design. You can add and take away rolls and do many other things.

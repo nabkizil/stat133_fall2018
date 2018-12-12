@@ -1,0 +1,92 @@
+---
+title: "Getting started with roller"
+author: "Nabeil Kizilbash"
+date: "December 2, 2018"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to roller}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+library(roller)
+```
+
+
+## Rolling a Die
+
+The package `"roller"` is a minimal implementation for simulating rolling
+a die a given number of times, and to visualize the relative frequencies
+in such a series of rolls
+
+## Creating a `device`
+
+The first step is to create a `"die"` object with the function `device()`:
+
+```{r}
+mydie <- device()
+mydie
+```
+
+By default, `device()` creates a die with two sides `1`, and 
+`2`, and with probability values for each side of 0.5.
+
+You can change the defatuls with arguments `sides` and `prob`:
+
+```{r}
+loaded <- device(sides = c('HEADS', 'tails'), prob = c(0.8, 0.2))
+loaded
+```
+
+
+## rolling a die
+
+Once you have defined a `"die"` object, you can use the function `roll()` to
+roll a die a given number of `times`. The output will be an object of class 
+`"rolls"`, which will contain the vector of `rolls`:
+
+```{r}
+set.seed(123)
+roll100 <- roll(mydie, times = 100)
+roll100
+```
+
+The `summary()` function gives you a nice table of frequencies:
+```{r}
+summary(roll100)
+```
+
+
+## Plot of relative frequencies
+
+You can use the function `plot()` to create a graohic with the relative 
+frequencies of a series of coin tosses:
+
+```{r, fig.show='hold'}
+plot(roll100)
+```
+
+## Additional things you can do
+
+you can extract a specific roll from your rolls using the "[]" operator
+```{r}
+roll100[17]
+```
+
+You can replace a particular roll value with another value
+```{r}
+roll100[17] <- 2
+roll100[17]
+```
+You can add more rolls via the "+" method
+```{r}
+roll200 <- (roll100 + 100)
+
+length(roll100$rolls)
+length(roll200)
+
+```
+
+

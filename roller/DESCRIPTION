@@ -1,0 +1,14 @@
+Package: roller
+Type: Package
+Title: Simulates rolling a die
+Version: 0.1.0
+Author: Nabeil Kizilbash
+Maintainer: <nabkizil@berkeley.edu>
+Description: This package allows you to create and roll your own die and also run simulations and visualize your data. It has many methods that can help you accomplish this and includes a readme and vignettes for ease of use.
+License: GPL2
+Encoding: UTF-8
+LazyData: true
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 6.1.1
